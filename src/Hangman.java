@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class main {
+public class Hangman {
 
     static void printWord(String word, boolean[] wordGuess) {
         int n = word.length();
@@ -85,7 +85,7 @@ public class main {
             }
 
         }
-    
+        sc.close();
     }
 
     static String getWord(String word) throws IOException {
