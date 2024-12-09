@@ -1,7 +1,6 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,13 +12,17 @@ public class Hangman {
         for (int i = 0; i < n; i++) {
             c = word.charAt(i);
             if ((c > 64 && c <= 90) || (c > 96 && c <= 122)) {
+                // For all alphabetic characters
                 if (wordGuess[i]) {
-                    System.out.printf("%c ",wordGuess[i]);
+                    // Character has been guessed
+                    System.out.printf("%c ", c);
                 } else {
+                    // Character not guessed
                     System.out.printf("_ "); 
                 }
             } else {
-                System.out.printf("%c ",wordGuess[i]);
+                // Non alphabetic character will be displayed
+                System.out.printf("%c ", c);
             }
         }
         System.out.println();
@@ -32,24 +35,23 @@ public class Hangman {
         int gui = 1; //gui default is true
         int wordLen;
         String word = "";
-        
 
-        if (args.length < 2) {
+        if (args.length > 0) {
             if (args[0] != "1") {
                 gui = 0;
             }
         }
-        
-        
-        
+
         // guess word selection
         word = getWord(word);
+        word = word.toLowerCase();
         wordLen = word.length();
+
         boolean[] wordGuess = new boolean[wordLen];
         Scanner sc = new Scanner(System.in);
         int j; // index of character player guessed
         int guesses = 6; // Num of incorrect guesses
-        
+
         //Play Game
         while (!gameOver) {
             printWord(word,wordGuess);
@@ -63,7 +65,13 @@ public class Hangman {
                 // if guess is incorrect
                 guesses--;
             } else {
-                wordGuess[j] = true;
+
+                // Check if the guessed character in other indexes
+                for (int i = j; i < wordLen; i++) {
+                    if (ch == word.charAt(i)) {
+                        wordGuess[i] = true;
+                    }
+                }
             }
 
             // Game over
@@ -90,27 +98,15 @@ public class Hangman {
 
     static String getWord(String word) throws IOException {
         Random rand = new Random();
-        int guess;
-        // 1. Read file from wordlists(At a later stage we will choose which wordlist based on langauges)
-        File file = new File("../src/english.txt");
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        
-        // 2. Set guess word
-        int n = (int) file.length();
-        // guess -> position of the word in the wordlist
-        guess = rand.nextInt(n);
-        while (guess >= 0) {
-            if  (guess == 0) {
-                // when position of the word is reached
-                word = br.readLine();
-                break;
-            }
-            // decrement until the word
-            guess--;
-            br.readLine();
-        }
+        Path filePath = Path.of("../Wordlists/english.txt");
 
-        br.close();
+        // Get all lines as a List of Strings
+        var lines = Files.readAllLines(filePath);
+
+        // Pick a random word from the list
+        int guess = rand.nextInt(lines.size());
+        word = lines.get(guess);
+
         return word;
     }
 }
