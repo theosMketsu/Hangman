@@ -1,0 +1,60 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+*.iws
+
+# NetBeans files
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+*.nb-gradle/
+
+# VS Code files
+.vscode/
+
+# Maven files
+target/
+
+# Gradle files
+.gradle/
+build/
+
+# Eclipse files
+.project
+.classpath
+.settings/
+bin/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*.orig
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Others
+*.out
+*.log
