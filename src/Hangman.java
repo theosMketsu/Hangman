@@ -127,7 +127,6 @@ public class Hangman {
         while (!gameOver) {
             System.out.printf("Guesses: %d\n", guesses);
             System.out.println("Enter a guess");
-            printWord(word,wordGuess);
             guess = sc.next().toLowerCase();
             System.out.println();
 
@@ -145,6 +144,7 @@ public class Hangman {
                 // ---word guess---
                 ch = guess.charAt(0); //only read the first character
                 guessWord(ch, word, wordGuess);
+                printWord(word, wordGuess);
                 for (boolean x: wordGuess) {
                     gameOver = x;
                     if (!gameOver) {
@@ -205,11 +205,6 @@ public class Hangman {
                     }
                 }
             }
-
-        }
-
-        if (guesses > 0) {
-
         }
         sc.close();
     }
